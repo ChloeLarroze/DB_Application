@@ -33,7 +33,8 @@ asadmin version
 ```
 
 ## How to use ? 
-Either go to `TP1.1-stateless` or `TP1.2-stateful` and run `
+Either go to `TP1.1-stateless` or `TP1.2-stateful` and run: 
+
 ``bash
 chmod +x ./build.sh
 ./build.sh
