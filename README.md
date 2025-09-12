@@ -17,7 +17,8 @@ Add the following to your shell profile (`.bashrc`, `.zshrc`, etc.):
 export PAYARA_HOME=/path/to/your/payara6
 
 # Set Java classpath for compilation and client execution
-export CLASSPATH=$PAYARA_HOME/glassfish/lib/jakartaee-api-10.0.0.jar:$PAYARA_HOME/glassfish/lib/gf-client.jar:$PAYARA_HOME/glassfish/lib/appserver-rt.jar:.
+export CLASSPATH=.:$PAYARA_HOME/glassfish/modules/jakarta.ejb-api.jar:$PAYARA_HOME/glassfish/lib/gf-client.jar:$PAYARA_HOME/glassfish/lib/appserv-rt.jar
+
 
 # Add asadmin to PATH
 export PATH=$PATH:$PAYARA_HOME/glassfish/bin
