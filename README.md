@@ -41,4 +41,4 @@ chmod +x ./build.sh
 ./build.sh
 ```
 
-> NB: All useful commands are in TP1.1-stateless/.gitignore/payara_starter.txt file 
+> NB: All useful commands are in `useful_cmd.txt` file 
