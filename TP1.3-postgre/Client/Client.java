@@ -12,19 +12,19 @@ public class Client {
             
             System.out.println("=== Test de Gestion de Bibliothèque ===");
             
-            // Test 1: Créer des livres
-            System.out.println("\n1. Création de livres...");
+            // créer livres
+            System.out.println("création livres...");
             try {
-                gestion.nouveauLivre("978-2-123456-78-9", "Introduction à Java EE");
-                gestion.nouveauLivre("978-2-987654-32-1", "Bases de données avec PostgreSQL");
-                gestion.nouveauLivre("978-2-456789-12-3", "Programmation Web avancée");
+                gestion.nouveauLivre("111", "Le petit prince");
+                gestion.nouveauLivre("222", "Le rouge et le noir");
+                gestion.nouveauLivre("333", "Germinal");
                 System.out.println("✓ Livres créés avec succès");
             } catch (Exception e) {
                 System.err.println("Erreur lors de la création: " + e.getMessage());
             }
             
-            // Test 2: Lister tous les livres
-            System.out.println("\n2. Liste de tous les livres:");
+            // liste des livres
+            System.out.println("liste de tous les livres:");
             try {
                 List<Livre> livres = gestion.listerLivres();
                 for (Livre livre : livres) {
@@ -34,10 +34,10 @@ public class Client {
                 System.err.println("Erreur lors du listage: " + e.getMessage());
             }
             
-            // Test 3: Rechercher un livre
-            System.out.println("\n3. Recherche d'un livre spécifique:");
+            // rehcerhce livre
+            System.out.println("recherche d'un livre spécifique:");
             try {
-                Livre livre = gestion.rechercherLivre("978-2-123456-78-9");
+                Livre livre = gestion.rechercherLivre("111");
                 if (livre != null) {
                     System.out.println("Trouvé: " + livre);
                 } else {
@@ -48,14 +48,14 @@ public class Client {
             }
             
             // Test 4: Emprunter un livre (étape 5)
-            System.out.println("\n4. Test d'emprunt:");
+            System.out.println("test d'emprunt:");
             try {
-                System.out.println("Emprunt du livre 978-2-123456-78-9...");
-                gestion.emprunterLivre("978-2-123456-78-9");
+                System.out.println("Emprunt du livre 111...");
+                gestion.emprunterLivre("111");
                 System.out.println("✓ Livre emprunté");
                 
-                // Vérifier l'état
-                Livre livreEmprunte = gestion.rechercherLivre("978-2-123456-78-9");
+                //vérifier l'état
+                Livre livreEmprunte = gestion.rechercherLivre("111");
                 System.out.println("État après emprunt: " + livreEmprunte);
             } catch (Exception e) {
                 System.err.println("Erreur lors de l'emprunt: " + e.getMessage());

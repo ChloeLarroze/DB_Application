@@ -1,5 +1,6 @@
 package cl;
 
+//FIX 
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -17,12 +18,6 @@ public class GestionLivreBean implements GestionLivre {
     
     @Override //override de la méthode de l'interface dans step 2
     public void nouveauLivre(String isbn, String titre) {
-        //on check si le livre existe déjà
-        Livre existant = em.find(Livre.class, isbn);
-        if (existant != null) {
-            throw new IllegalArgumentException("Un livre avec l'ISBN " + isbn + " existe déjà");
-        }
-        
         Livre livre = new Livre(isbn, titre);
         em.persist(livre);
     }
@@ -32,9 +27,7 @@ public class GestionLivreBean implements GestionLivre {
         Livre livre = em.find(Livre.class, isbn); //on cherche le livre par son ISBN
         if (livre != null) {
             em.remove(livre); //si on le trouve, on le supprime
-        } else {
-            throw new IllegalArgumentException("Livre avec ISBN " + isbn + " non trouvé");
-        }
+        } 
     }
     
     @Override
@@ -51,19 +44,13 @@ public class GestionLivreBean implements GestionLivre {
     @Override
     public void emprunterLivre(String isbn) {
         Livre livre = em.find(Livre.class, isbn); //on cherche le livre par son ISBN
-        if (livre == null) {
-            throw new IllegalArgumentException("Livre avec ISBN " + isbn + " non trouvé"); 
-        }
         livre.emprunter(); //on appelle la méthode emprunter de l'entité Livre
-        em.merge(livre);
+        em.merge(livre); 
     }
     
     @Override
     public void rendreLivre(String isbn) {
         Livre livre = em.find(Livre.class, isbn);
-        if (livre == null) {
-            throw new IllegalArgumentException("Livre avec ISBN " + isbn + " non trouvé");
-        }
         livre.rendre();
         em.merge(livre);
     }
