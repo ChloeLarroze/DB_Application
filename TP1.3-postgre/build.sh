@@ -3,10 +3,9 @@
 # =========================
 # Configuration
 # =========================
-SERVER_DIR=Server   # Change this if your EJBs are in a different folder
+SERVER_DIR=Server
 CLIENT_DIR=Client
-EJB_JAR=BonjourEJB.jar
-
+EJB_JAR=BiblioEJB.jar
 
 # =========================
 # Cleaning old files & stopping domain (if running)
@@ -32,13 +31,12 @@ if [ $? -ne 0 ]; then
 fi
 
 # =========================
-# Package BonjourEJB.jar
+# Package BiblioEJB.jar
 # =========================
 echo "=== Packaging $EJB_JAR ==="
 cd $SERVER_DIR
-jar cvf $EJB_JAR cl/*.class META-INF #jar cvf $EJB_JAR META-INF cl/*.class
+jar cvf $EJB_JAR cl/*.class META-INF
 cd ..
-pwd
 
 if [ $? -ne 0 ]; then
     echo "ERROR: JAR creation failed!"
@@ -52,19 +50,23 @@ echo "=== Launching GlassFish Server ==="
 asadmin start-domain
 
 # ========================
-# Deployment (force run)
+# Undeploy existing application (if any)
 # ========================
 echo "=== Undeploying existing application (if any) ==="
-asadmin undeploy BonjourEJB 2>/dev/null || echo "No existing deployment found"
+asadmin undeploy BiblioEJB 2>/dev/null || echo "No existing deployment found"
 
-
+# ========================
+# Deploy EJB
+# ========================
 echo "=== Deploying $EJB_JAR ==="
-asadmin deploy  $SERVER_DIR/$EJB_JAR #asadmin deploy --force $SERVER_DIR/$EJB_JAR -- undeploy works though
+asadmin deploy $SERVER_DIR/$EJB_JAR
+
 if [ $? -ne 0 ]; then
     echo "ERROR: Deployment failed!"
     echo "Check the server logs for more details:"
-    echo "tail -f $PAYARA_HOME/glassfish/domains/domain1/logs/server.log"
-    tail -20 $PAYARA_HOME/glassfish/domains/domain1/logs/server.log | grep -A 5 -B 5 "Exception\|Error"
+    # see all log: 
+    #tail -100 $PAYARA_HOME/glassfish/domains/domain1/logs/server.log
+    #tail -20 $PAYARA_HOME/glassfish/domains/domain1/logs/server.log | grep -A 5 -B 5 "Exception\|Error"
     exit 1
 fi
 
@@ -74,12 +76,11 @@ fi
 echo "=== Copying $EJB_JAR to Client folder ==="
 cp $SERVER_DIR/$EJB_JAR $CLIENT_DIR/
 
-
 # =========================
 # Compile Client
 # =========================
 echo "=== Compiling Client ==="
-javac -cp "$CLIENT_DIR/$EJB_JAR:$CLASSPATH" $CLIENT_DIR/Client.java #javac -cp "$CLIENT_DIR/$EJB_JAR:$CLASSPATH" $CLIENT_DIR/Client.java
+javac -cp "$PAYARA_HOME/glassfish/lib/gf-client.jar:$PAYARA_HOME/glassfish/lib/appserver-rt.jar:$CLIENT_DIR/$EJB_JAR:." $CLIENT_DIR/Client.java
 
 if [ $? -ne 0 ]; then
     echo "ERROR: Client compilation failed!"
@@ -90,15 +91,12 @@ fi
 # Run Client
 # =========================
 echo "=== Running Client ==="
-#java --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.management/javax.management.openmbean=ALL-UNNAMED --add-opens=java.management/javax.management=ALL-UNNAMED -cp "$CLASSPATH:BonjourEJB.jar" Client
 cd $CLIENT_DIR
 java --add-opens=java.base/java.util=ALL-UNNAMED \
      --add-opens=java.base/java.io=ALL-UNNAMED \
      --add-opens=java.base/java.lang=ALL-UNNAMED \
      --add-opens=java.management/javax.management.openmbean=ALL-UNNAMED \
      --add-opens=java.management/javax.management=ALL-UNNAMED \
-     -cp "$PAYARA_HOME/glassfish/lib/gf-client.jar:$PAYARA_HOME/glassfish/lib/appserver-rt.jar:BonjourEJB.jar:." \
+     -cp "$PAYARA_HOME/glassfish/lib/gf-client.jar:$PAYARA_HOME/glassfish/lib/appserver-rt.jar:$EJB_JAR:." \
      Client
-
-
-
+cd ..

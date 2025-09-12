@@ -1,0 +1,4 @@
+0000000000000000000000000000000000000000 a4b775b1a347b63d053799381288156f4048e8e5 Chloé <chloe.larroze@etu.emse.fr> 1757319737 +0200	commit (initial): Initial commit
+a4b775b1a347b63d053799381288156f4048e8e5 6fd65016947b8340cc9fab237d9f4b6d010d0aa5 Chloé <chloe.larroze@etu.emse.fr> 1757330335 +0200	commit: Add usage instructions for PostgreSQL setup in README
+6fd65016947b8340cc9fab237d9f4b6d010d0aa5 a682b3cc5b6ec877e9299d9415b5667dea2056ff Chloé <chloe.larroze@etu.emse.fr> 1757353560 +0200	commit: Entity bean and first interface
+a682b3cc5b6ec877e9299d9415b5667dea2056ff 4f82a44574f09afa2321bcb1e9d5dc0dcae4a613 Chloé <chloe.larroze@etu.emse.fr> 1757677024 +0200	commit: Implement Client and Server components for library management system with EJB integration

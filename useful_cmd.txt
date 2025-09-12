@@ -1,0 +1,33 @@
+#payara useful cmd
+
+START
+asadmin start-domain
+
+Default domain is domain1.
+Admin console: 👉 http://localhost:4848
+Default web app port: 👉 http://localhost:8080
+
+#STOP 
+asadmin stop-domain
+
+
+#Check domains
+asadmin list-domains
+
+
+#issue
+##cache 
+asadmin delete-domain domain1
+asadmin create-domain --nopassword domain1
+asadmin start-domain domain1
+
+
+#payara lib file path
+/payara6/glassfish/lib
+/payara6/glassfish/modules
+
+#check ports 
+sudo lsof -i :port
+kill -9 PID     
+
+
