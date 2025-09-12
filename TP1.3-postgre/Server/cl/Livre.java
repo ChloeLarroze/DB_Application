@@ -7,29 +7,23 @@ import java.io.Serializable; // FIX
 @Entity
 @Table(name = "livre")
 public class Livre implements Serializable { //FIX 
-    //private static final long serialVersionUID = 1L; //not used
+// Erreur: java.rmi.MarshalException: CORBA MARSHAL 1330446343 No; nested exception is: 
+//         org.omg.CORBA.MARSHAL: PRÉCIS: 00810007: Underflow in BufferManagerReadStream after last fragment in message  vmcid: OMG  minor code: 7  completed: No
 
-    @Id
+    //fix otherwise "Entity class [class cl.Livre] has no primary key specified" and 
+    // deployment error
+     @Id //fix 
     private String isbn;
-    
-    @Column(nullable = false)
+    @Column(nullable = false) //fix
     private String titre;
-    
+
     //constructeur par défaut (requis par JPA)
     public Livre() {
     }
     
-    // Constructeur à 2 arguments
+    //constructeur à 2 arguments
     public Livre(String isbn, String titre) {
         this.isbn = isbn;
         this.titre = titre;
-    }
-    
-    @Override
-    public String toString() {
-        return "Livre{" +
-                "isbn='" + isbn + '\'' +
-                ", titre='" + titre + '\'' +
-                '}';
     }
 }

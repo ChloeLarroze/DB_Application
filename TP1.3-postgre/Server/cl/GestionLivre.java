@@ -8,13 +8,11 @@ public interface GestionLivre {
     //step 2
     void nouveauLivre(String isbn, String titre);
     
-    //steps 4& 5
+    //steps 4
     void supprimerLivre(String isbn);
-    Livre rechercherLivre(String isbn);
-    List<Livre> listerLivres();
     
     //step 5 
+    Livre rechercherLivre(String isbn);
     void emprunterLivre(String isbn);
     void rendreLivre(String isbn);
-    List<Livre> listerLivresDisponibles();
 }
