@@ -41,4 +41,4 @@ chmod +x ./build.sh
 ./build.sh
 ```
 
-> NB: All useful commands are in `useful_cmd.txt` file 
+> NB: All useful commands are in `useful_cmd.txt` file. 

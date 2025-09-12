@@ -29,31 +29,6 @@ public class Livre implements Serializable {
         this.disponible = true; //a la création, le livre est disponible
     }
     
-    // Getters et Setters
-    public String getIsbn() {
-        return isbn;
-    }
-    
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
-    
-    public String getTitre() {
-        return titre;
-    }
-    
-    public void setTitre(String titre) {
-        this.titre = titre;
-    }
-    
-    public boolean isDisponible() {
-        return disponible;
-    }
-    
-    public void setDisponible(boolean disponible) {
-        this.disponible = disponible;
-    }
-    
     //methodes step 5 TODO 
     public void emprunter() {
         if (disponible) {
