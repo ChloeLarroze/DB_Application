@@ -16,14 +16,26 @@ public class Livre implements Serializable { //FIX
     private String isbn;
     @Column(nullable = false) //fix
     private String titre;
+    @Column(nullable = false) //fix
+    private boolean disponible;
 
     //constructeur par défaut (requis par JPA)
     public Livre() {
     }
-    
+
     //constructeur à 2 arguments
     public Livre(String isbn, String titre) {
         this.isbn = isbn;
         this.titre = titre;
+        this.disponible = true; //livre dispo création
+    }
+
+    //methodes utiles pour le truc 5 
+    public boolean estDispo() {
+        return this.disponible;
+    }
+
+    public void updateDispo(boolean dispo) {
+        this.disponible = dispo;
     }
 }

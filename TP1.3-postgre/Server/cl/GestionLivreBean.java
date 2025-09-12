@@ -8,20 +8,18 @@ import jakarta.persistence.TypedQuery;
 // import javax.persistence.EntityManager; //deprecated
 // import javax.persistence.PersistenceContext; //same
 // import javax.persistence.TypedQuery; //same
-import java.util.List;
 
 @Stateless
 public class GestionLivreBean implements GestionLivre {
     
     @PersistenceContext(unitName = "biblioPU")
-    private EntityManager em; //entity manager pour gérer les entités
+    protected EntityManager em; //entity manager pour gérer les entités
     
     
     public void nouveauLivre(String isbn, String titre) {
         Livre livre = new Livre(isbn, titre);
-        em.persist(livre);
+        em.persist(livre); //persist = ajoute l'entité à la base
     }
-    
 
     public void supprimerLivre(String isbn) {
         Livre livre = em.find(Livre.class, isbn); //on cherche le livre par son ISBN
@@ -34,14 +32,20 @@ public class GestionLivreBean implements GestionLivre {
         return em.find(Livre.class, isbn); //on retourne le livre trouvé 
     }
     
-
     public void emprunterLivre(String isbn) {
-        Livre livre = em.find(Livre.class, isbn); //on cherche le livre par son ISBN
-        em.merge(livre); 
+        Livre livre = rechercherLivre(isbn);
+        if (livre.estDispo()) {
+            livre.updateDispo(false);
+        }
+        em.merge(livre); //merge = met à jour l'entité dans la base
     }
-     
+
+
     public void rendreLivre(String isbn) {
-        Livre livre = em.find(Livre.class, isbn);
-        em.merge(livre);
+        Livre livre = rechercherLivre(isbn);
+        if (!livre.estDispo()) {
+            livre.updateDispo(true);
+        }
+        em.merge(livre); //met à jour l'entité dans la base
     }
 }
